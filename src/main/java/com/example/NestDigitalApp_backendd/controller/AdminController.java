@@ -5,6 +5,7 @@ import com.example.NestDigitalApp_backendd.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -38,5 +39,15 @@ private EmployeeDao edao;
         return (List<Employee>) edao.SearchEmp(e.getEcode());
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/deleteEmp",produces = "application/json",consumes ="application/json" )
+    public HashMap<String,String> DeleteEmp(@RequestBody Employee e){
+        String empId=String.valueOf(e.getId());
+        System.out.println(empId);
+        edao.DeleteEmp(e.getId());
+        HashMap<String,String> map=new HashMap<>();
+        map.put("status","success");
+        return map;
+    }
 
 }
